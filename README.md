@@ -11,7 +11,7 @@ Van / route sales client: today’s route, offline orders, collections, customer
 Sign in with ERPNext **site URL + email/password** (cookie session via `ErpnextSessionStore`). Use **Continue offline** for mock data. Optional default site:
 
 ```bash
---dart-define=FRAPPE_BASE_URL=http://127.0.0.1:8082
+--dart-define=FRAPPE_BASE_URL=https://erp.zatgo.online
 ```
 
 ## Run
