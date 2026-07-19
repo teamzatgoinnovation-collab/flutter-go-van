@@ -12,7 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.6.0
   zatgo_dart_sdk:
-    path: ../../SharedSDK/dart_sdk
+    path: ../../../SharedSDK/dart_sdk
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,8 @@
 # Go Van — Flutter client
 
 **Status:** Runnable scaffold (mock route data + ERPNext password login)  
-**Backend:** `go_van`  
-**SDK:** [`SharedSDK/dart_sdk`](../../SharedSDK/dart_sdk/)
+**Backend:** `zatgo_core.api.v1.go_van.*` (thin trips list/get)  
+**SDK:** [`SharedSDK/dart_sdk`](../../../SharedSDK/dart_sdk/)
 
 Van / route sales client: today’s route, offline orders, collections, customer visits (GPS stubs), and van stock transfers.
 
@@ -33,4 +33,11 @@ flutter run
 | Stock | On-van inventory + transfer adjust |
 | Link | ERPNext session status / sign out |
 
-Feature pages stay on mock until `go_van.api.v1.*` is wired.
+Feature pages stay on mock until Go Van hub APIs deepen beyond trips list/get.
+
+## Dependency
+
+```yaml
+zatgo_dart_sdk:
+  path: ../../../SharedSDK/dart_sdk
+```
