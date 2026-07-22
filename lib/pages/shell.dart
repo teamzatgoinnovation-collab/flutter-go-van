@@ -51,6 +51,8 @@ class _GoVanShellState extends State<GoVanShell> {
       child: Scaffold(
         body: IndexedStack(index: _index, children: pages),
         bottomNavigationBar: NavigationBar(
+          height: 72,
+          elevation: 0,
           selectedIndex: _index,
           onDestinationSelected: (i) => setState(() => _index = i),
           destinations: const [

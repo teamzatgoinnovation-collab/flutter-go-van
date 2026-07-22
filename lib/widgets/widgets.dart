@@ -24,9 +24,10 @@ class PageScaffold extends StatelessWidget {
     final mergedActions = <Widget>[
       ...?actions,
       if (auth != null)
-        TextButton(
+        IconButton(
+          tooltip: 'Sign out',
           onPressed: () => auth.onSignOut(),
-          child: const Text('Sign out'),
+          icon: const Icon(Icons.logout_rounded),
         ),
     ];
 
