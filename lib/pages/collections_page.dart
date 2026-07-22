@@ -78,6 +78,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
   Widget build(BuildContext context) {
     final rows = mockRepo.listCollections();
     final total = rows.fold<double>(0, (s, c) => s + c.amount);
+    final theme = Theme.of(context);
 
     return PageScaffold(
       title: 'Collections',
@@ -93,20 +94,26 @@ class _CollectionsPageState extends State<CollectionsPage> {
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Card(
               child: ListTile(
-                leading: const Icon(Icons.account_balance_wallet_outlined),
+                leading: Icon(
+                  Icons.account_balance_wallet_outlined,
+                  color: theme.colorScheme.primary,
+                ),
                 title: const Text('Collected today'),
                 trailing: Text(
                   money(total),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
           ),
           Expanded(
             child: rows.isEmpty
-                ? const EmptyHint('No collections yet')
+                ? const EmptyHint(
+                    'No collections yet',
+                    icon: Icons.payments_outlined,
+                  )
                 : ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 88),
                     itemCount: rows.length,
@@ -114,8 +121,16 @@ class _CollectionsPageState extends State<CollectionsPage> {
                     itemBuilder: (context, i) {
                       final c = rows[i];
                       return Card(
+                        clipBehavior: Clip.antiAlias,
                         child: ListTile(
-                          title: Text(c.customerName),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 6,
+                          ),
+                          title: Text(
+                            c.customerName,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
                           subtitle: Text(
                             '${c.method} · ${timeLabel(c.collectedAt)}'
                             '${c.synced ? '' : ' · pending sync'}',

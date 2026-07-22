@@ -57,34 +57,48 @@ class _StockPageState extends State<StockPage> {
     return PageScaffold(
       title: 'Van stock',
       subtitle: 'On-board inventory & transfers',
-      child: ListView.separated(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-        itemCount: stock.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 8),
-        itemBuilder: (context, i) {
-          final line = stock[i];
-          return Card(
-            child: ListTile(
-              title: Text(line.itemName),
-              subtitle: Text(line.itemCode),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '${money(line.qty)} ${line.uom}',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+      child: stock.isEmpty
+          ? const EmptyHint(
+              'No van stock lines.',
+              icon: Icons.inventory_2_outlined,
+            )
+          : ListView.separated(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+              itemCount: stock.length,
+              separatorBuilder: (_, _) => const SizedBox(height: 8),
+              itemBuilder: (context, i) {
+                final line = stock[i];
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    title: Text(
+                      line.itemName,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(line.itemCode),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${money(line.qty)} ${line.uom}',
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        IconButton(
+                          tooltip: 'Transfer',
+                          onPressed: () =>
+                              _transfer(line.itemCode, line.itemName),
+                          icon: const Icon(Icons.swap_horiz),
+                        ),
+                      ],
+                    ),
                   ),
-                  IconButton(
-                    tooltip: 'Transfer',
-                    onPressed: () => _transfer(line.itemCode, line.itemName),
-                    icon: const Icon(Icons.swap_horiz),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

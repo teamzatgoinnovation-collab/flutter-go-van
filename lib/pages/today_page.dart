@@ -27,6 +27,7 @@ class _TodayPageState extends State<TodayPage> {
   Widget build(BuildContext context) {
     final summary = mockRepo.summary();
     final stops = mockRepo.listStops();
+    final theme = Theme.of(context);
 
     return PageScaffold(
       title: 'Go Van',
@@ -39,20 +40,20 @@ class _TodayPageState extends State<TodayPage> {
         ),
       ],
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
         children: [
           Text(
             'Today on the route',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             'Van sales stops, offline queue, and GPS check-ins — mock until go_van APIs land.',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 14),
           GridView.count(
@@ -85,15 +86,42 @@ class _TodayPageState extends State<TodayPage> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 22),
           Text(
             'Route stops',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 8),
-          ...stops.map((stop) => _StopCard(stop: stop, onChanged: _refresh)),
+          const SizedBox(height: 10),
+          if (stops.isEmpty)
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.route_outlined,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'No stops on the route today.',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else
+            ...stops.map((stop) => _StopCard(stop: stop, onChanged: _refresh)),
         ],
       ),
     );
@@ -217,11 +245,22 @@ class _VisitChip extends StatelessWidget {
       VisitStatus.completed => ('Done', const Color(0xFF0F4C5C)),
       VisitStatus.skipped => ('Skipped', Colors.brown),
     };
-    return Chip(
-      visualDensity: VisualDensity.compact,
-      label: Text(label, style: TextStyle(color: color, fontSize: 12)),
-      side: BorderSide(color: color.withValues(alpha: 0.35)),
-      backgroundColor: color.withValues(alpha: 0.08),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          height: 1.2,
+        ),
+      ),
     );
   }
 }

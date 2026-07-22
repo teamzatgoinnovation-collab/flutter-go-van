@@ -55,7 +55,9 @@ class _GoVanAppState extends State<GoVanApp> {
     return MaterialApp(
       title: 'Go Van',
       debugShowCheckedModeBanner: false,
-      theme: buildGoVanTheme(),
+      theme: buildGoVanTheme(brightness: Brightness.light),
+      darkTheme: buildGoVanTheme(brightness: Brightness.dark),
+      themeMode: ThemeMode.system,
       home: _showLogin
           ? LoginPage(
               session: widget.session,

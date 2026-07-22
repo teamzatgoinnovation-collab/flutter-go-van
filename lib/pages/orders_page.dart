@@ -106,7 +106,10 @@ class _OrdersPageState extends State<OrdersPage> {
           ),
           Expanded(
             child: orders.isEmpty
-                ? const EmptyHint('No orders')
+                ? const EmptyHint(
+                    'No orders',
+                    icon: Icons.outbox_outlined,
+                  )
                 : ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 88),
                     itemCount: orders.length,
@@ -114,8 +117,16 @@ class _OrdersPageState extends State<OrdersPage> {
                     itemBuilder: (context, i) {
                       final o = orders[i];
                       return Card(
+                        clipBehavior: Clip.antiAlias,
                         child: ListTile(
-                          title: Text(o.customerName),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 6,
+                          ),
+                          title: Text(
+                            o.customerName,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
                           subtitle: Text('${o.itemsLabel}\n${o.id}'),
                           isThreeLine: true,
                           trailing: Column(
@@ -155,9 +166,22 @@ class _SyncBadge extends StatelessWidget {
       OrderSyncStatus.queued => ('Queued', const Color(0xFFE36414)),
       OrderSyncStatus.failed => ('Failed', Colors.red.shade700),
     };
-    return Text(
-      label,
-      style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          height: 1.2,
+        ),
+      ),
     );
   }
 }
