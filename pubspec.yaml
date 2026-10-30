@@ -13,7 +13,7 @@ dependencies:
   google_fonts: ^6.2.1
   http: ^1.6.0
   zatgo_dart_sdk:
-    path: ../../../SharedSDK/dart_sdk
+    path: ../../SharedSDK/dart_sdk
 
 dev_dependencies:
   flutter_test:
